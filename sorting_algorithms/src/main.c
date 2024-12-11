@@ -38,7 +38,7 @@ int main() {
             total_times[2] += measure_time(gnome_sort, arr_copy, n);
             for (int j = 0; j < n; j++) arr_copy[j] = arr[j];
 
-            total_times[3] += measure_time((void (*)(int[], int))quick_sort, arr_copy, n);
+            total_times[3] += measure_time(quick_sort, arr_copy, n);
             for (int j = 0; j < n; j++) arr_copy[j] = arr[j];
 
             total_times[4] += measure_time(heap_sort, arr_copy, n);
