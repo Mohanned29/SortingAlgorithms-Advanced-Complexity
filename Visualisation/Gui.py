@@ -55,7 +55,7 @@ def draw_array(screen, arr, color_map):
 def visualize_sorting(sorting_algorithm):
     pygame.init()
     width, height = 1000, 1200
-    screen = pygame.display.set_mode((width, height), pygame.NOFRAME)
+    screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Sorting Algorithm Visualization")
     clock = pygame.time.Clock()
 
@@ -70,42 +70,56 @@ def visualize_sorting(sorting_algorithm):
 
 def sorting_menu():
     pygame.init()
-    width, height = 1000, 1200
-    screen = pygame.display.set_mode((width, height), pygame.NOFRAME)
+    screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption("Sorting Algorithm Menu")
-    font = pygame.font.Font(None, 50)
     clock = pygame.time.Clock()
 
-    menu_items = ["Bubble Sort", "Quick Sort"]
-    selected_index = 0
+    red = (255, 0, 0)
+    white = (255, 255, 255)
+    hover_color = (200, 200, 200)
+
+    menu_items = [
+        {"text": "Bubble Sort", "action": lambda: visualize_sorting(bubble_sort_visual)},
+        {"text": "Quick Sort", "action": lambda: visualize_sorting(quick_sort_visual)},
+    ]
+
+    font = pygame.font.Font(None, 50)
+    button_width = 200
+    button_height = 60
+    button_margin = 20
+    buttons = []
+
+    for i, item in enumerate(menu_items):
+        x = (800 - button_width) // 2
+        y = 200 + i * (button_height + button_margin)
+        buttons.append({"rect": pygame.Rect(x, y, button_width, button_height), "text": item["text"], "action": item["action"]})
+
     running = True
-
     while running:
-        screen.fill((0, 0, 0))
+        screen.fill(red)
 
-        for i, item in enumerate(menu_items):
-            color = (255, 255, 255)
-            if i == selected_index:
-                color = (0, 255, 0)
-            text = font.render(item, True, color)
-            screen.blit(text, (width // 2 - text.get_width() // 2, height // 2 + i * 60 - text.get_height()))
+        mouse_pos = pygame.mouse.get_pos()
+
+        # Draw buttons
+        for button in buttons:
+            rect = button["rect"]
+            text = button["text"]
+            color = hover_color if rect.collidepoint(mouse_pos) else white
+            pygame.draw.rect(screen, color, rect)
+            text_surface = font.render(text, True, red)
+            text_rect = text_surface.get_rect(center=rect.center)
+            screen.blit(text_surface, text_rect)
 
         pygame.display.flip()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    selected_index = (selected_index - 1) % len(menu_items)
-                elif event.key == pygame.K_DOWN:
-                    selected_index = (selected_index + 1) % len(menu_items)
-                elif event.key == pygame.K_RETURN:
-                    if menu_items[selected_index] == "Bubble Sort":
-                        visualize_sorting(bubble_sort_visual)
-                    elif menu_items[selected_index] == "Quick Sort":
-                        visualize_sorting(quick_sort_visual)
-                    running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                for button in buttons:
+                    if button["rect"].collidepoint(mouse_pos):
+                        button["action"]()
+                        running = False
 
         clock.tick(60)
 
