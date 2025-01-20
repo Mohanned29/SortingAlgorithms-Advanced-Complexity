@@ -8,12 +8,12 @@
 #include "../include/heap_sort.h"
 #include "../include/utils.h"
 
-#define MAX_SIZE 10000
+#define MAX_SIZE 1000000
 #define MAX_VALUE 1000
 #define NUM_TESTS 5
 
 int main() {
-    int sizes[] = {100, 1000, 5000, 10000};
+    int sizes[] = {100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000};
     int num_sizes = sizeof(sizes) / sizeof(sizes[0]);
 
     for (int i = 0; i < num_sizes; i++) {
