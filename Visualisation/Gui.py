@@ -71,7 +71,8 @@ def visualize_sorting(sorting_algorithm):
     pygame.display.set_caption("Sorting Algorithm Visualization")
 
     n = 150
-    arr = [random.randint(10, 1000) for _ in range(n)]
+    arr = list(range(1, n + 1))
+    random.shuffle(arr)
 
     delay = 0.0005
     sorting_algorithm(arr, lambda arr, color_map: draw_array(screen, arr, color_map), delay)
