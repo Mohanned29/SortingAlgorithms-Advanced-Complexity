@@ -6,6 +6,30 @@
 #define RESET   "\033[0m"
 #define YELLOW  "\033[33m"
 
+int partition(int arr[], int low, int high) {
+    int pivot = arr[low];
+    int i = low - 1;
+    int j = high + 1;
+
+    while (1) {
+        do {
+            i++;
+        } while (arr[i] < pivot);
+
+        do {
+            j--;
+        } while (arr[j] > pivot);
+
+        if (i >= j) {
+            return j;
+        }
+
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
+
 static void quick_sort_recursive(int arr[], int low, int high) {
     if (low < high) {
         int pi = partition(arr, low, high);

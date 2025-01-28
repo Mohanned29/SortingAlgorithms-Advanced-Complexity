@@ -6,6 +6,7 @@
 #define RESET   "\033[0m"
 #define YELLOW  "\033[33m"
 
+// O(n+ max)
 void counting_sort(int arr[], int n) {
     int max = arr[0];
     for (int i = 1; i < n; i++) {

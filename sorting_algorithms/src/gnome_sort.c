@@ -6,6 +6,7 @@
 #define RESET   "\033[0m"
 #define YELLOW  "\033[33m"
 
+// O(n pow 2)
 void gnome_sort(int arr[], int n) {
     int i = 0;
     while (i < n) {
